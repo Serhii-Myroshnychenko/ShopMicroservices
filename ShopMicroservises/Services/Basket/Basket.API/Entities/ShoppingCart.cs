@@ -1,5 +1,4 @@
 ﻿namespace Basket.API.Entities;
-
 public class ShoppingCart
 {
     public string Username { get; set; }

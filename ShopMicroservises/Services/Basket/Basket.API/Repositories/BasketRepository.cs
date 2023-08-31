@@ -3,7 +3,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
 namespace Basket.API.Repositories;
-
 public class BasketRepository : IBasketRepository
 {
     private readonly IDistributedCache _redisCache;
@@ -11,7 +10,7 @@ public class BasketRepository : IBasketRepository
     {
         _redisCache = redisCache ?? throw new ArgumentNullException(nameof(redisCache));
     }
-        
+
     public async Task DeleteBasket(string usename)
     {
         await _redisCache.RemoveAsync(usename);
@@ -20,7 +19,7 @@ public class BasketRepository : IBasketRepository
     public async Task<ShoppingCart> GetBasket(string username)
     {
         var basket = await _redisCache.GetStringAsync(username);
-        if(string.IsNullOrEmpty(basket)) return new ShoppingCart(username);
+        if (string.IsNullOrEmpty(basket)) return new ShoppingCart(username);
         return JsonConvert.DeserializeObject<ShoppingCart>(basket);
     }
 
